@@ -4,6 +4,6 @@ import "testing"
 
 func TestCreateCsvAndReadit(t *testing.T) {
 
-	df := Dataframe{make(map[string]Serie)}
+	df := DataFrame{make(map[string]Serie)}
 
 }
