@@ -22,4 +22,6 @@ jobs:
       - name: Setup Go 
         uses: actions/setup-go@v4
       - name: merge test and src folders
-        run: cd ./tests/* ./src
+        run: cp ./tests/* ./src
+      - name: run tests
+        run: cd src && go test
