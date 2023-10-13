@@ -133,7 +133,6 @@ func (d DataFrame) print(size int) {
 		}
 	}
 
-	//fmt.Print("\n")
 	for range d.series {
 		fmt.Print("----------------")
 	}
@@ -223,4 +222,37 @@ func (d DataFrame) withColumn(columns []string) DataFrame {
 
 func (d DataFrame) setColumn(name string, column Serie) {
 	d.series[name] = column
+}
+
+func (d DataFrame) toCsv(filePath string) {
+	var sb strings.Builder
+
+	cc := 0
+	columnsNames := make([]string, 0)
+	for col, _ := range d.series {
+		columnsNames = append(columnsNames, col)
+		sb.WriteString(col)
+		cc++
+		if cc < len(d.series) {
+			sb.WriteString(string(CSV_READER_SEPARTOR))
+		}
+	}
+	sb.WriteString("\n")
+
+	for id := 0; id < d.size(); id++ {
+		for cc, col := range columnsNames {
+			sb.WriteString(d.series[col].rawValues[id])
+			if cc < len(columnsNames)-1 {
+				sb.WriteString(string(CSV_READER_SEPARTOR))
+			}
+		}
+		sb.WriteString("\n")
+	}
+
+	f, _ := os.Create(filePath)
+	defer f.Close()
+	w := bufio.NewWriter(f)
+	w.WriteString(sb.String())
+	w.Flush()
+
 }

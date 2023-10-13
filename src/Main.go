@@ -25,4 +25,6 @@ func main() {
 
 	merged.print(25)
 
+	merged.toCsv("./out.csv")
+
 }
