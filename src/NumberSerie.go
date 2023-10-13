@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"sort"
 	"strconv"
 )
@@ -21,6 +22,39 @@ func makeNumberSerie(s Serie) NumberSerie {
 	return NumberSerie{floatValues}
 }
 
+func makeConstantNumberSerie(value float64, size int) NumberSerie {
+	floatValues := make([]float64, size)
+	for id, _ := range floatValues {
+		floatValues[id] = value
+	}
+	return NumberSerie{floatValues}
+}
+
+func makeRangeNumberSerie(start float64, end float64, size int) NumberSerie {
+	floatValues := make([]float64, size)
+	stepps := float64(size)
+	for id, _ := range floatValues {
+		floatValues[id] = start + (end-start)*float64(id)/stepps
+	}
+	return NumberSerie{floatValues}
+}
+
+func makeUniformRandomNumberSerie(min float64, max float64, size int) NumberSerie {
+	floatValues := make([]float64, size)
+	for id, _ := range floatValues {
+		floatValues[id] = rand.Float64()*(max-min) + min
+	}
+	return NumberSerie{floatValues}
+}
+
+func makeNormalRandomNumberSerie(mean float64, std float64, size int) NumberSerie {
+	floatValues := make([]float64, size)
+	for id, _ := range floatValues {
+		floatValues[id] = rand.NormFloat64()*std + mean
+	}
+	return NumberSerie{floatValues}
+}
+
 func (s NumberSerie) add(s2 NumberSerie) NumberSerie {
 	values := make([]float64, len(s.values))
 	for id, val := range s.values {
@@ -28,12 +62,25 @@ func (s NumberSerie) add(s2 NumberSerie) NumberSerie {
 	}
 	return NumberSerie{values}
 }
+
 func (s NumberSerie) addScalar(term float64) NumberSerie {
 	values := make([]float64, len(s.values))
 	for id, val := range s.values {
 		values[id] = val + term
 	}
 	return NumberSerie{values}
+}
+
+func (s NumberSerie) mean() float64 {
+	return s.sum() / float64(len(s.values))
+}
+
+func (s NumberSerie) sum() float64 {
+	value := 0.0
+	for _, val := range s.values {
+		value += val
+	}
+	return value
 }
 
 func (s NumberSerie) sub(s2 NumberSerie) NumberSerie {
