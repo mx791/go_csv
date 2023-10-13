@@ -1,0 +1,15 @@
+name: Build Go app
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Go 
+        uses: actions/setup-go@v4
+      - name: Display Go version
+        run: go version
+      - name: Build Go app
+        run: go build ./src/
