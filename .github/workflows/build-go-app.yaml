@@ -24,4 +24,4 @@ jobs:
       - name: merge test and src folders
         run: cp ./tests/* ./src
       - name: run tests
-        run: cd src && go test --coverage coverage-report.txt
+        run: cd src && go test -coverprofile coverage-report.txt
