@@ -11,7 +11,5 @@ jobs:
         uses: actions/setup-go@v4
       - name: Display Go version
         run: go version
-      - name: List files
-        run: ls -la && pwd
       - name: Build Go app
-        run: go build ./src/
+        run: cd src && go build
