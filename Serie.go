@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"sort"
 	"strconv"
 )
@@ -165,6 +166,14 @@ func (s NumberSerie) betweenScalar(min float64, max float64) BoolSerie {
 		values[id] = val > min && val < max
 	}
 	return BoolSerie{values}
+}
+
+func (s NumberSerie) toSerie() Serie {
+	values := make([]string, len(s.values))
+	for id, val := range s.values {
+		values[id] = fmt.Sprintf("%f", val)
+	}
+	return Serie{values}
 }
 
 func (s NumberSerie) argSort(ascending bool) NumberSerie {

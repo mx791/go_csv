@@ -1,7 +1,10 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"os"
+	"strings"
 )
 
 type DataFrame struct {
@@ -28,6 +31,62 @@ func valueAtSize(data string, targetSize int) string {
 		out = out + " "
 	}
 	return out
+}
+
+func DataFrameFromCsv(path string) DataFrame {
+
+	separator := '\t'
+	file, err := os.Open(path)
+	if err != nil {
+		return DataFrame{}
+	}
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+	scanner.Scan()
+	firstLine := scanner.Text()
+
+	size := 0
+
+	columnsNames := strings.Split(firstLine, string(separator))
+	series := make([][]string, len(columnsNames))
+
+	for scanner.Scan() {
+
+		currentLine := scanner.Text()
+		var sb strings.Builder
+		valueArray := make([]string, 0)
+		openBracket := false
+
+		for id := 0; id < len(currentLine); id++ {
+			letter := currentLine[id]
+			if letter == '"' {
+				openBracket = !openBracket
+				continue
+			} else if letter == '\t' && !openBracket {
+				valueArray = append(valueArray, sb.String())
+				sb = strings.Builder{}
+			} else {
+				sb.Write([]byte{letter})
+			}
+		}
+		valueArray = append(valueArray, sb.String())
+
+		if len(valueArray) == len(columnsNames) {
+			size += 1
+
+			for id := 0; id < len(columnsNames); id++ {
+				series[id] = append(series[id], valueArray[id])
+			}
+		}
+	}
+
+	seriesMap := make(map[string]Serie, 0)
+	for id, col := range columnsNames {
+		seriesMap[col] = Serie{series[id]}
+	}
+
+	return DataFrame{seriesMap}
 }
 
 func (d DataFrame) print(size int) {
@@ -158,4 +217,8 @@ func (d DataFrame) withColumn(columns []string) DataFrame {
 		newDf[col] = d.series[col]
 	}
 	return DataFrame{newDf}
+}
+
+func (d DataFrame) setColumn(name string, column Serie) {
+	d.series[name] = column
 }
