@@ -14,7 +14,6 @@ func createDataframe() DataFrame {
 func TestCreateCsvAndReadit(t *testing.T) {
 
 	df := createDataframe()
-	df.print(10)
 
 	if df.size() != 4 {
 		t.Fatalf("Size error")
@@ -23,7 +22,7 @@ func TestCreateCsvAndReadit(t *testing.T) {
 	df.toCsv("./out.csv")
 
 	df2 := DataFrameFromCsv("./out.csv")
-	df2.print(10)
+
 	if df2.size() != 4 {
 		t.Fatalf("Size error")
 	}
