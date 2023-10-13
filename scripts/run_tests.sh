@@ -5,7 +5,7 @@ cp ./src/* ./test_temp
 cp ./tests/* ./test_temp
 
 cd ./test_temp
-go test
+go test -coverprofile cov
 
 
 cd ..
