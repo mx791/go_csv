@@ -112,7 +112,7 @@ func (d DataFrame) print(size int) {
 		fmt.Print("----------------")
 	}
 	fmt.Print("\n")
-	for i := 0; i < size; i++ {
+	for i := 0; i < min(size, d.size()); i++ {
 		fmt.Print("|")
 		for _, col := range columnsNames {
 			fmt.Print(valueAtSize(d.series[col].rawValues[i], 15) + "|")
