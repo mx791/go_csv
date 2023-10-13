@@ -33,6 +33,8 @@ func valueAtSize(data string, targetSize int) string {
 	return out
 }
 
+var CSV_READER_SEPARTOR byte = '\t'
+
 func DataFrameFromCsv(path string) DataFrame {
 
 	separator := '\t'
@@ -63,7 +65,7 @@ func DataFrameFromCsv(path string) DataFrame {
 			if letter == '"' {
 				openBracket = !openBracket
 				continue
-			} else if letter == '\t' && !openBracket {
+			} else if letter == CSV_READER_SEPARTOR && !openBracket {
 				valueArray = append(valueArray, sb.String())
 				sb = strings.Builder{}
 			} else {
