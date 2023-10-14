@@ -1,11 +1,12 @@
 #! /usr/bin/bash
 
 mkdir test_temp
-cp ./src/* ./test_temp
-cp ./tests/* ./test_temp
+cp -r ./src/* ./test_temp
+cp -r ./tests/* ./test_temp
 
 cd ./test_temp
-go test -coverprofile cov
+rm -f Main.go
+go test -coverprofile ../cov.txt
 
 
 cd ..
