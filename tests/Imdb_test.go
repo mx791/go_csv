@@ -49,3 +49,17 @@ func TestFilteringDatabase(t *testing.T) {
 		t.Fatalf("Dune comes after")
 	}
 }
+
+func TestBestTweentiesMovies(t *testing.T) {
+
+	database := GetDatabase()
+	database = database.filter(database.series["startYear"].numberSerie().betweenScalar(1999.0, 2010.0))
+	database.setColumn("score", database.series["numVotes"].numberSerie().mul(database.series["averageRating"].numberSerie()).toSerie())
+	database = database.iLoc(database.series["score"].numberSerie().argSort(false))
+
+	if database.series["originalTitle"].rawValues[0] != "The Dark Knight" {
+		t.Fatalf("Batman should be first")
+	}
+
+	database.print(15)
+}
