@@ -26,4 +26,4 @@ jobs:
       - name: run tests
         run: cd src && go test -coverprofile ../coverage-report.txt
       - name: HTML report
-        run: go tool cover -html=coverage-report.txt
+        run: go tool cover -html=coverage-report.txt && ls -la
