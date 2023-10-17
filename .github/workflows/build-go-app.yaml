@@ -25,3 +25,5 @@ jobs:
         run: cp -r ./tests/* ./src
       - name: run tests
         run: cd src && go test -coverprofile ../coverage-report.txt
+      - name: HTML report
+        run: go tool cover -html=coverage-report.txt
