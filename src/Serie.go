@@ -1,5 +1,7 @@
 package main
 
+import "sync"
+
 /**
  * Classe de base pour les séries
  */
@@ -72,4 +74,20 @@ func (s BoolSerie) conditional(condition BoolSerie, trueValue Serie, falseValue 
 		}
 	}
 	return Serie{outValue}
+}
+
+func boolSerieParallelise(fn func(index int) bool, serieSize int) []bool {
+	values := make([]bool, serieSize)
+	var wg sync.WaitGroup
+	for i := 0; i < NUM_THREADS; i++ {
+		wg.Add(1)
+		go func() {
+			for id := 0; id < serieSize; id += NUM_THREADS {
+				values[id] = fn(id)
+			}
+			defer wg.Done()
+		}()
+		wg.Wait()
+	}
+	return values
 }

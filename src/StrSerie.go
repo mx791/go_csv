@@ -2,7 +2,6 @@ package main
 
 import (
 	"strings"
-	"sync"
 )
 
 type StrSerie struct {
@@ -18,26 +17,15 @@ func (s StrSerie) len() NumberSerie {
 }
 
 func (s StrSerie) equals(value string) BoolSerie {
-	values := make([]bool, len(s.values))
-	var wg sync.WaitGroup
-	for i := 0; i < NUM_THREADS; i++ {
-		wg.Add(1)
-		go func() {
-			for id := 0; id < len(s.values); id += NUM_THREADS {
-				values[id] = value == s.values[id]
-			}
-			defer wg.Done()
-		}()
-		wg.Wait()
-	}
-
+	values := boolSerieParallelise(func(id int) bool {
+		return value == s.values[id]
+	}, len(s.values))
 	return BoolSerie{values}
 }
 
 func (s StrSerie) contains(value string) BoolSerie {
-	values := make([]bool, len(s.values))
-	for id, val := range s.values {
-		values[id] = strings.Contains(val, value)
-	}
+	values := boolSerieParallelise(func(id int) bool {
+		return strings.Contains(s.values[id], value)
+	}, len(s.values))
 	return BoolSerie{values}
 }
