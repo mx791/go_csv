@@ -75,6 +75,26 @@ func (s NumberSerie) mean() float64 {
 	return s.sum() / float64(len(s.values))
 }
 
+func (s NumberSerie) max() float64 {
+	value := s.values[0]
+	for _, val := range s.values {
+		if val > value {
+			value = val
+		}
+	}
+	return value
+}
+
+func (s NumberSerie) min() float64 {
+	value := s.values[0]
+	for _, val := range s.values {
+		if val < value {
+			value = val
+		}
+	}
+	return value
+}
+
 func (s NumberSerie) sum() float64 {
 	value := 0.0
 	for _, val := range s.values {

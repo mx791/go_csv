@@ -15,6 +15,10 @@ func (s Serie) numberSerie() NumberSerie {
 	return makeNumberSerie(s)
 }
 
+func (s Serie) strSerie() StrSerie {
+	return StrSerie{s.rawValues}
+}
+
 /**
  * Série booléenne
  */
@@ -56,4 +60,16 @@ func (s BoolSerie) and(s2 BoolSerie) BoolSerie {
 		boolValues[id] = val && s2.values[id]
 	}
 	return BoolSerie{boolValues}
+}
+
+func (s BoolSerie) conditional(condition BoolSerie, trueValue Serie, falseValue Serie) Serie {
+	outValue := make([]string, len(s.values))
+	for id, _ := range s.values {
+		if condition.values[id] {
+			outValue[id] = trueValue.rawValues[id]
+		} else {
+			outValue[id] = falseValue.rawValues[id]
+		}
+	}
+	return Serie{outValue}
 }
