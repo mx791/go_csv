@@ -5,6 +5,7 @@ import (
 	"math/rand"
 	"sort"
 	"strconv"
+	"math"
 )
 
 type NumberSerie struct {
@@ -67,6 +68,22 @@ func (s NumberSerie) AddScalar(term float64) NumberSerie {
 	values := make([]float64, len(s.values))
 	for id, val := range s.values {
 		values[id] = val + term
+	}
+	return NumberSerie{values}
+}
+
+func (s NumberSerie) Abs() NumberSerie {
+	values := make([]float64, len(s.values))
+	for id, val := range s.values {
+		values[id] = math.Abs(val)
+	}
+	return NumberSerie{values}
+}
+
+func (s NumberSerie) Power(pow float64) NumberSerie {
+	values := make([]float64, len(s.values))
+	for id, val := range s.values {
+		values[id] = math.Pow(val, pow)
 	}
 	return NumberSerie{values}
 }
