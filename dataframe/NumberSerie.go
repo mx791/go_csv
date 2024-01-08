@@ -12,8 +12,8 @@ type NumberSerie struct {
 }
 
 func MakeNumberSerie(s Serie) NumberSerie {
-	floatValues := make([]float64, len(s.rawValues))
-	for id, val := range s.rawValues {
+	floatValues := make([]float64, len(s.RawValues))
+	for id, val := range s.RawValues {
 		newVal, err := strconv.ParseFloat(val, 64)
 		if err == nil {
 			floatValues[id] = newVal
