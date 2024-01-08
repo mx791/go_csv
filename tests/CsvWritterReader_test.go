@@ -6,7 +6,7 @@ import (
 )
 
 func createDataframe() dataframe.DataFrame {
-	df := dataframe.DataFrame{make(map[string]dataframe.Serie)}
+	df := dataframe.DataFrameFromSeries(make(map[string]dataframe.Serie))
 	df.SetColumn("names", dataframe.Serie{[]string{"A", "B", "C", "D"}})
 	df.SetColumn("ages", dataframe.Serie{[]string{"12", "15", "12", "7"}})
 	return df

@@ -40,6 +40,10 @@ func valueAtSize(data string, targetSize int) string {
 var CSV_READER_SEPARTOR byte = '\t'
 var NUM_THREADS = 1
 
+func DataFrameFromSeries(series map[string]Serie) DataFrame {
+	return DataFrame{series}
+}
+
 func DataFrameFromCsv(path string) DataFrame {
 
 	separator := '\t'
