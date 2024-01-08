@@ -3,12 +3,13 @@ package main
 import (
 	"fmt"
 	"testing"
+	"github.com/mx791/go_csv/src"
 )
 
 func TestCreatingNumericSeries(t *testing.T) {
 
 	DF_SIZE := 150
-	df := DataFrame{make(map[string]Serie)}
+	df := src.DataFrame{make(map[string]Serie)}
 	df.setColumn("index", makeRangeNumberSerie(0.0, 1.0, DF_SIZE).toSerie())
 	df.setColumn("index_squared", df.series["index"].numberSerie().mul(df.series["index"].numberSerie()).toSerie())
 
@@ -34,11 +35,11 @@ func TestPriceBlackScholes(t *testing.T) {
 	jump_vol := annualized_volatility / 19.1049
 	strike := 100.0
 
-	df := DataFrame{make(map[string]Serie)}
-	base_returns := makeConstantNumberSerie(100.0, DF_SIZE)
+	df := src.DataFrame{make(map[string]Serie)}
+	base_returns := src.makeConstantNumberSerie(100.0, DF_SIZE)
 
 	for i := 0; i < jumps; i++ {
-		returns := makeNormalRandomNumberSerie(1.0, jump_vol, DF_SIZE)
+		returns := src.makeNormalRandomNumberSerie(1.0, jump_vol, DF_SIZE)
 		base_returns = base_returns.mul(returns)
 		df.setColumn("day"+fmt.Sprint(i), base_returns.toSerie())
 	}
