@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"testing"
-	"github.com/mx791/go_csv/src"
+	"github.com/mx791/go_csv/dataframe"
 )
 
 func TestCreatingNumericSeries(t *testing.T) {
