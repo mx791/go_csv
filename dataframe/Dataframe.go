@@ -17,7 +17,7 @@ func (d DataFrame) Serie(name string) Serie {
 
 func (d DataFrame) Size() int {
 	for _, val := range d.series {
-		return len(val.rawValues)
+		return len(val.RawValues)
 	}
 	return 0
 }
@@ -120,7 +120,7 @@ func (d DataFrame) Print(size int) {
 	for i := 0; i < min(size, d.Size()); i++ {
 		fmt.Print("|")
 		for _, col := range columnsNames {
-			fmt.Print(valueAtSize(d.series[col].rawValues[i], 15) + "|")
+			fmt.Print(valueAtSize(d.series[col].RawValues[i], 15) + "|")
 		}
 		fmt.Print("\n")
 	}
@@ -132,7 +132,7 @@ func (d DataFrame) Print(size int) {
 		for i := d.Size() - size; i < d.Size(); i++ {
 			fmt.Print("|")
 			for _, col := range columnsNames {
-				fmt.Print(valueAtSize(d.series[col].rawValues[i], 15) + "|")
+				fmt.Print(valueAtSize(d.series[col].RawValues[i], 15) + "|")
 			}
 			fmt.Print("\n")
 		}
@@ -156,7 +156,7 @@ func (d DataFrame) Filter(filter BoolSerie) DataFrame {
 		if val {
 			for _, col := range columnsNames {
 				s := df[col]
-				s.rawValues = append(s.rawValues, d.series[col].rawValues[id])
+				s.RawValues = append(s.RawValues, d.series[col].RawValues[id])
 				df[col] = s
 			}
 		}
@@ -179,7 +179,7 @@ func (d DataFrame) ILoc(indexList NumberSerie) DataFrame {
 		}
 		for _, col := range columnsNames {
 			s := df[col]
-			s.rawValues = append(s.rawValues, d.series[col].rawValues[val2])
+			s.RawValues = append(s.RawValues, d.series[col].RawValues[val2])
 			df[col] = s
 		}
 	}
@@ -189,13 +189,13 @@ func (d DataFrame) ILoc(indexList NumberSerie) DataFrame {
 func (d DataFrame) Join(d2 DataFrame, colName string) DataFrame {
 
 	rightValues := make(map[string]int)
-	for id, val := range d2.series[colName].rawValues {
+	for id, val := range d2.series[colName].RawValues {
 		rightValues[val] = id
 	}
 
 	rightIdList := make([]float64, 0)
 	leftIdList := make([]float64, 0)
-	for id, val := range d.series[colName].rawValues {
+	for id, val := range d.series[colName].RawValues {
 		indx, found := rightValues[val]
 		if found {
 			rightIdList = append(rightIdList, float64(indx))
@@ -246,7 +246,7 @@ func (d DataFrame) ToCsv(filePath string) {
 
 	for id := 0; id < d.Size(); id++ {
 		for cc, col := range columnsNames {
-			sb.WriteString(d.series[col].rawValues[id])
+			sb.WriteString(d.series[col].RawValues[id])
 			if cc < len(columnsNames)-1 {
 				sb.WriteString(string(CSV_READER_SEPARTOR))
 			}
