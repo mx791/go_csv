@@ -10,8 +10,8 @@ type Serie struct {
 }
 
 func (s Serie) GetAt(id int) string {
-	if id < s.Size() {
-		return d.rawValues[id]
+	if id < len(s.rawValues) {
+		return ds.rawValues[id]
 	}
 	return ""
 }
