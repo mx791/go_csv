@@ -29,3 +29,20 @@ func (s StrSerie) Contains(value string) BoolSerie {
 	}, len(s.values))
 	return BoolSerie{values}
 }
+
+func (s StrSerie) ConcatScalar(prefix string, sufix string) StrSerie {
+	values := make([]string, len(s.values))
+	for id, val := range s.values {
+		values[id] = prefix + val + sufix
+	}
+	return StrSerie{values}
+}
+
+func (s StrSerie) Concat(data StrSerie) StrSerie {
+	values := make([]string, len(s.values))
+	for id, val := range s.values {
+		values[id] = val + data.values[id]
+	}
+	return StrSerie{values}
+}
+
