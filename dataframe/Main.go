@@ -7,7 +7,7 @@ import (
 func main() {
 
 	dataset := DataFrameFromCsv("D:\\dataset\\imdb\\movies.tsv")
-	fmt.Println(dataset.size())
+	fmt.Println(dataset.Size())
 	dataset = dataset.WithColumn([]string{"startYear", "originalTitle", "runtimeMinutes", "tconst"})
 	dataset = dataset.Filter(
 		dataset.series["startYear"].numberSerie().greaterThanScalar(2000.0),

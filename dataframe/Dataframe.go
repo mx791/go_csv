@@ -113,7 +113,7 @@ func (d DataFrame) Print(size int) {
 		fmt.Print("----------------")
 	}
 	fmt.Print("\n")
-	for i := 0; i < min(size, d.size()); i++ {
+	for i := 0; i < min(size, d.Size()); i++ {
 		fmt.Print("|")
 		for _, col := range columnsNames {
 			fmt.Print(valueAtSize(d.series[col].rawValues[i], 15) + "|")
@@ -121,11 +121,11 @@ func (d DataFrame) Print(size int) {
 		fmt.Print("\n")
 	}
 
-	if d.size() >= size*2 {
+	if d.Size() >= size*2 {
 
-		fmt.Println("| ...", d.size()-size*2, " lines...")
+		fmt.Println("| ...", d.Size()-size*2, " lines...")
 
-		for i := d.size() - size; i < d.size(); i++ {
+		for i := d.Size() - size; i < d.Size(); i++ {
 			fmt.Print("|")
 			for _, col := range columnsNames {
 				fmt.Print(valueAtSize(d.series[col].rawValues[i], 15) + "|")
@@ -140,7 +140,7 @@ func (d DataFrame) Print(size int) {
 	fmt.Print("\n")
 }
 
-func (d DataFrame) filter(filter BoolSerie) DataFrame {
+func (d DataFrame) Filter(filter BoolSerie) DataFrame {
 	columnsNames := make([]string, 0)
 	df := make(map[string]Serie, 0)
 	for col, _ := range d.series {
@@ -170,7 +170,7 @@ func (d DataFrame) ILoc(indexList NumberSerie) DataFrame {
 
 	for _, val := range indexList.values {
 		val2 := int(val)
-		if val2 >= d.size() {
+		if val2 >= d.Size() {
 			continue
 		}
 		for _, col := range columnsNames {
@@ -199,7 +199,7 @@ func (d DataFrame) Join(d2 DataFrame, colName string) DataFrame {
 		}
 	}
 
-	rightDataframe := d2.iLoc(NumberSerie{rightIdList})
+	rightDataframe := d2.ILoc(NumberSerie{rightIdList})
 	leftDataframe := d.iLoc(NumberSerie{leftIdList})
 
 	newDataframe := make(map[string]Serie, 0)
@@ -240,7 +240,7 @@ func (d DataFrame) ToCsv(filePath string) {
 	}
 	sb.WriteString("\n")
 
-	for id := 0; id < d.size(); id++ {
+	for id := 0; id < d.Size(); id++ {
 		for cc, col := range columnsNames {
 			sb.WriteString(d.series[col].rawValues[id])
 			if cc < len(columnsNames)-1 {
