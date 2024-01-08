@@ -9,22 +9,22 @@ type Serie struct {
 	rawValues []string
 }
 
-func (s Serie) boolSerie() BoolSerie {
+func (s Serie) BoolSerie() BoolSerie {
 	return makeBoolSerie(s)
 }
 
-func (s Serie) numberSerie() NumberSerie {
+func (s Serie) NumberSerie() NumberSerie {
 	return makeNumberSerie(s)
 }
 
-func (s Serie) strSerie() StrSerie {
+func (s Serie) StrSerie() StrSerie {
 	return StrSerie{s.rawValues}
 }
 
 /**
  * Série booléenne
  */
-func makeBoolSerie(s Serie) BoolSerie {
+func MakeBoolSerie(s Serie) BoolSerie {
 	boolValues := make([]bool, len(s.rawValues))
 	for id, val := range s.rawValues {
 		if val == "1" || val == "true" || val == "True" {
@@ -40,7 +40,7 @@ type BoolSerie struct {
 	values []bool
 }
 
-func (s BoolSerie) not() BoolSerie {
+func (s BoolSerie) Not() BoolSerie {
 	boolValues := make([]bool, len(s.values))
 	for id, val := range s.values {
 		boolValues[id] = !val
@@ -48,7 +48,7 @@ func (s BoolSerie) not() BoolSerie {
 	return BoolSerie{boolValues}
 }
 
-func (s BoolSerie) or(s2 BoolSerie) BoolSerie {
+func (s BoolSerie) Or(s2 BoolSerie) BoolSerie {
 	boolValues := make([]bool, len(s.values))
 	for id, val := range s.values {
 		boolValues[id] = val || s2.values[id]
@@ -56,7 +56,7 @@ func (s BoolSerie) or(s2 BoolSerie) BoolSerie {
 	return BoolSerie{boolValues}
 }
 
-func (s BoolSerie) and(s2 BoolSerie) BoolSerie {
+func (s BoolSerie) And(s2 BoolSerie) BoolSerie {
 	boolValues := make([]bool, len(s.values))
 	for id, val := range s.values {
 		boolValues[id] = val && s2.values[id]
@@ -64,7 +64,7 @@ func (s BoolSerie) and(s2 BoolSerie) BoolSerie {
 	return BoolSerie{boolValues}
 }
 
-func (s BoolSerie) conditional(condition BoolSerie, trueValue Serie, falseValue Serie) Serie {
+func (s BoolSerie) Conditional(condition BoolSerie, trueValue Serie, falseValue Serie) Serie {
 	outValue := make([]string, len(s.values))
 	for id, _ := range s.values {
 		if condition.values[id] {
@@ -76,7 +76,7 @@ func (s BoolSerie) conditional(condition BoolSerie, trueValue Serie, falseValue 
 	return Serie{outValue}
 }
 
-func boolSerieParallelise(fn func(index int) bool, serieSize int) []bool {
+func BoolSerieParallelise(fn func(index int) bool, serieSize int) []bool {
 	values := make([]bool, serieSize)
 	var wg sync.WaitGroup
 	for i := 0; i < NUM_THREADS; i++ {

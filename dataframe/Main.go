@@ -8,15 +8,15 @@ func main() {
 
 	dataset := DataFrameFromCsv("D:\\dataset\\imdb\\movies.tsv")
 	fmt.Println(dataset.size())
-	dataset = dataset.withColumn([]string{"startYear", "originalTitle", "runtimeMinutes", "tconst"})
-	dataset = dataset.filter(
+	dataset = dataset.WithColumn([]string{"startYear", "originalTitle", "runtimeMinutes", "tconst"})
+	dataset = dataset.Filter(
 		dataset.series["startYear"].numberSerie().greaterThanScalar(2000.0),
 	)
 
 	ratings := DataFrameFromCsv("D:\\dataset\\imdb\\ratings.tsv")
-	ratings = ratings.filter(ratings.series["numVotes"].numberSerie().greaterThanScalar(800_000))
+	ratings = ratings.Filter(ratings.series["numVotes"].numberSerie().greaterThanScalar(800_000))
 
-	merged := dataset.join(ratings, "tconst")
+	merged := dataset.Join(ratings, "tconst")
 
 	starsColumn := merged.series["numVotes"].numberSerie().mul(merged.series["averageRating"].numberSerie().addScalar(-5.0))
 	merged.setColumn("totalStars", starsColumn.toSerie())

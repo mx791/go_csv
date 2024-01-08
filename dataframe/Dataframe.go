@@ -11,7 +11,7 @@ type DataFrame struct {
 	series map[string]Serie
 }
 
-func (d DataFrame) size() int {
+func (d DataFrame) Size() int {
 	for _, val := range d.series {
 		return len(val.rawValues)
 	}
@@ -92,7 +92,7 @@ func DataFrameFromCsv(path string) DataFrame {
 	return DataFrame{seriesMap}
 }
 
-func (d DataFrame) print(size int) {
+func (d DataFrame) Print(size int) {
 
 	columnsNames := make([]string, 0)
 	for col, _ := range d.series {
@@ -160,7 +160,7 @@ func (d DataFrame) filter(filter BoolSerie) DataFrame {
 	return DataFrame{df}
 }
 
-func (d DataFrame) iLoc(indexList NumberSerie) DataFrame {
+func (d DataFrame) ILoc(indexList NumberSerie) DataFrame {
 	columnsNames := make([]string, 0)
 	df := make(map[string]Serie, 0)
 	for col, _ := range d.series {
@@ -182,7 +182,7 @@ func (d DataFrame) iLoc(indexList NumberSerie) DataFrame {
 	return DataFrame{df}
 }
 
-func (d DataFrame) join(d2 DataFrame, colName string) DataFrame {
+func (d DataFrame) Join(d2 DataFrame, colName string) DataFrame {
 
 	rightValues := make(map[string]int)
 	for id, val := range d2.series[colName].rawValues {
@@ -213,7 +213,7 @@ func (d DataFrame) join(d2 DataFrame, colName string) DataFrame {
 	return DataFrame{newDataframe}
 }
 
-func (d DataFrame) withColumn(columns []string) DataFrame {
+func (d DataFrame) WithColumn(columns []string) DataFrame {
 	newDf := make(map[string]Serie)
 	for _, col := range columns {
 		newDf[col] = d.series[col]
@@ -221,11 +221,11 @@ func (d DataFrame) withColumn(columns []string) DataFrame {
 	return DataFrame{newDf}
 }
 
-func (d DataFrame) setColumn(name string, column Serie) {
+func (d DataFrame) SetColumn(name string, column Serie) {
 	d.series[name] = column
 }
 
-func (d DataFrame) toCsv(filePath string) {
+func (d DataFrame) ToCsv(filePath string) {
 	var sb strings.Builder
 
 	cc := 0

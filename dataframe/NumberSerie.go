@@ -11,7 +11,7 @@ type NumberSerie struct {
 	values []float64
 }
 
-func makeNumberSerie(s Serie) NumberSerie {
+func MakeNumberSerie(s Serie) NumberSerie {
 	floatValues := make([]float64, len(s.rawValues))
 	for id, val := range s.rawValues {
 		newVal, err := strconv.ParseFloat(val, 64)
@@ -22,7 +22,7 @@ func makeNumberSerie(s Serie) NumberSerie {
 	return NumberSerie{floatValues}
 }
 
-func makeConstantNumberSerie(value float64, size int) NumberSerie {
+func MakeConstantNumberSerie(value float64, size int) NumberSerie {
 	floatValues := make([]float64, size)
 	for id, _ := range floatValues {
 		floatValues[id] = value
@@ -30,7 +30,7 @@ func makeConstantNumberSerie(value float64, size int) NumberSerie {
 	return NumberSerie{floatValues}
 }
 
-func makeRangeNumberSerie(start float64, end float64, size int) NumberSerie {
+func MakeRangeNumberSerie(start float64, end float64, size int) NumberSerie {
 	floatValues := make([]float64, size)
 	stepps := float64(size)
 	for id, _ := range floatValues {
@@ -39,7 +39,7 @@ func makeRangeNumberSerie(start float64, end float64, size int) NumberSerie {
 	return NumberSerie{floatValues}
 }
 
-func makeUniformRandomNumberSerie(min float64, max float64, size int) NumberSerie {
+func MakeUniformRandomNumberSerie(min float64, max float64, size int) NumberSerie {
 	floatValues := make([]float64, size)
 	for id, _ := range floatValues {
 		floatValues[id] = rand.Float64()*(max-min) + min
@@ -47,7 +47,7 @@ func makeUniformRandomNumberSerie(min float64, max float64, size int) NumberSeri
 	return NumberSerie{floatValues}
 }
 
-func makeNormalRandomNumberSerie(mean float64, std float64, size int) NumberSerie {
+func MakeNormalRandomNumberSerie(mean float64, std float64, size int) NumberSerie {
 	floatValues := make([]float64, size)
 	for id, _ := range floatValues {
 		floatValues[id] = rand.NormFloat64()*std + mean
@@ -55,7 +55,7 @@ func makeNormalRandomNumberSerie(mean float64, std float64, size int) NumberSeri
 	return NumberSerie{floatValues}
 }
 
-func (s NumberSerie) add(s2 NumberSerie) NumberSerie {
+func (s NumberSerie) Add(s2 NumberSerie) NumberSerie {
 	values := make([]float64, len(s.values))
 	for id, val := range s.values {
 		values[id] = val + s2.values[id]
@@ -63,7 +63,7 @@ func (s NumberSerie) add(s2 NumberSerie) NumberSerie {
 	return NumberSerie{values}
 }
 
-func (s NumberSerie) addScalar(term float64) NumberSerie {
+func (s NumberSerie) AddScalar(term float64) NumberSerie {
 	values := make([]float64, len(s.values))
 	for id, val := range s.values {
 		values[id] = val + term
@@ -71,11 +71,11 @@ func (s NumberSerie) addScalar(term float64) NumberSerie {
 	return NumberSerie{values}
 }
 
-func (s NumberSerie) mean() float64 {
+func (s NumberSerie) Mean() float64 {
 	return s.sum() / float64(len(s.values))
 }
 
-func (s NumberSerie) max() float64 {
+func (s NumberSerie) Max() float64 {
 	value := s.values[0]
 	for _, val := range s.values {
 		if val > value {
@@ -85,7 +85,7 @@ func (s NumberSerie) max() float64 {
 	return value
 }
 
-func (s NumberSerie) min() float64 {
+func (s NumberSerie) Min() float64 {
 	value := s.values[0]
 	for _, val := range s.values {
 		if val < value {
@@ -95,7 +95,7 @@ func (s NumberSerie) min() float64 {
 	return value
 }
 
-func (s NumberSerie) sum() float64 {
+func (s NumberSerie) Sum() float64 {
 	value := 0.0
 	for _, val := range s.values {
 		value += val
@@ -103,7 +103,7 @@ func (s NumberSerie) sum() float64 {
 	return value
 }
 
-func (s NumberSerie) sub(s2 NumberSerie) NumberSerie {
+func (s NumberSerie) Sub(s2 NumberSerie) NumberSerie {
 	values := make([]float64, len(s.values))
 	for id, val := range s.values {
 		values[id] = val - s2.values[id]
@@ -111,14 +111,14 @@ func (s NumberSerie) sub(s2 NumberSerie) NumberSerie {
 	return NumberSerie{values}
 }
 
-func (s NumberSerie) mul(s2 NumberSerie) NumberSerie {
+func (s NumberSerie) Mul(s2 NumberSerie) NumberSerie {
 	values := make([]float64, len(s.values))
 	for id, val := range s.values {
 		values[id] = val * s2.values[id]
 	}
 	return NumberSerie{values}
 }
-func (s NumberSerie) mulScalar(s2 float64) NumberSerie {
+func (s NumberSerie) MulScalar(s2 float64) NumberSerie {
 	values := make([]float64, len(s.values))
 	for id, val := range s.values {
 		values[id] = val * s2
@@ -126,7 +126,7 @@ func (s NumberSerie) mulScalar(s2 float64) NumberSerie {
 	return NumberSerie{values}
 }
 
-func (s NumberSerie) div(s2 NumberSerie) NumberSerie {
+func (s NumberSerie) Div(s2 NumberSerie) NumberSerie {
 	values := make([]float64, len(s.values))
 	for id, val := range s.values {
 		values[id] = val / s2.values[id]
@@ -134,7 +134,7 @@ func (s NumberSerie) div(s2 NumberSerie) NumberSerie {
 	return NumberSerie{values}
 }
 
-func (s NumberSerie) equals(s2 NumberSerie) BoolSerie {
+func (s NumberSerie) Equals(s2 NumberSerie) BoolSerie {
 	values := make([]bool, len(s.values))
 	for id, val := range s.values {
 		values[id] = val == s2.values[id]
@@ -142,7 +142,7 @@ func (s NumberSerie) equals(s2 NumberSerie) BoolSerie {
 	return BoolSerie{values}
 }
 
-func (s NumberSerie) equalsScalar(s2 float64) BoolSerie {
+func (s NumberSerie) EqualsScalar(s2 float64) BoolSerie {
 	values := make([]bool, len(s.values))
 	for id, val := range s.values {
 		values[id] = val == s2
@@ -150,7 +150,7 @@ func (s NumberSerie) equalsScalar(s2 float64) BoolSerie {
 	return BoolSerie{values}
 }
 
-func (s NumberSerie) greaterThanScalar(s2 float64) BoolSerie {
+func (s NumberSerie) GreaterThanScalar(s2 float64) BoolSerie {
 	values := make([]bool, len(s.values))
 	for id, val := range s.values {
 		values[id] = val > s2
@@ -158,7 +158,7 @@ func (s NumberSerie) greaterThanScalar(s2 float64) BoolSerie {
 	return BoolSerie{values}
 }
 
-func (s NumberSerie) lessThanScalar(s2 float64) BoolSerie {
+func (s NumberSerie) LessThanScalar(s2 float64) BoolSerie {
 	values := make([]bool, len(s.values))
 	for id, val := range s.values {
 		values[id] = val < s2
@@ -166,7 +166,7 @@ func (s NumberSerie) lessThanScalar(s2 float64) BoolSerie {
 	return BoolSerie{values}
 }
 
-func (s NumberSerie) betweenScalar(min float64, max float64) BoolSerie {
+func (s NumberSerie) BetweenScalar(min float64, max float64) BoolSerie {
 	values := make([]bool, len(s.values))
 	for id, val := range s.values {
 		values[id] = val > min && val < max
@@ -174,7 +174,7 @@ func (s NumberSerie) betweenScalar(min float64, max float64) BoolSerie {
 	return BoolSerie{values}
 }
 
-func (s NumberSerie) toSerie() Serie {
+func (s NumberSerie) ToSerie() Serie {
 	values := make([]string, len(s.values))
 	for id, val := range s.values {
 		values[id] = fmt.Sprintf("%f", val)
@@ -182,7 +182,7 @@ func (s NumberSerie) toSerie() Serie {
 	return Serie{values}
 }
 
-func (s NumberSerie) argSort(ascending bool) NumberSerie {
+func (s NumberSerie) ArgSort(ascending bool) NumberSerie {
 	valuesMap := make(map[float64][]float64, 0)
 	for id, val := range s.values {
 		vect, found := valuesMap[val]

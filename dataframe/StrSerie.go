@@ -8,7 +8,7 @@ type StrSerie struct {
 	values []string
 }
 
-func (s StrSerie) len() NumberSerie {
+func (s StrSerie) Len() NumberSerie {
 	values := make([]float64, len(s.values))
 	for id, val := range s.values {
 		values[id] = float64(len(val))
@@ -16,14 +16,14 @@ func (s StrSerie) len() NumberSerie {
 	return NumberSerie{values}
 }
 
-func (s StrSerie) equals(value string) BoolSerie {
+func (s StrSerie) Equals(value string) BoolSerie {
 	values := boolSerieParallelise(func(id int) bool {
 		return value == s.values[id]
 	}, len(s.values))
 	return BoolSerie{values}
 }
 
-func (s StrSerie) contains(value string) BoolSerie {
+func (s StrSerie) Contains(value string) BoolSerie {
 	values := boolSerieParallelise(func(id int) bool {
 		return strings.Contains(s.values[id], value)
 	}, len(s.values))
