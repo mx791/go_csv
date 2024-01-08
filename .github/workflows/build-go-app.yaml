@@ -21,9 +21,9 @@ jobs:
       - uses: actions/checkout@v4
       - name: Setup Go 
         uses: actions/setup-go@v4
-      - name: merge test and src folders
-        run: cp -r ./tests/* ./src
+      #- name: merge test and src folders
+      #  run: cp -r ./tests/* ./src
       - name: run tests
-        run: cd src && go test -coverprofile ../coverage-report.txt
+        run: cd tests && go test -coverprofile ../coverage-report.txt
       - name: HTML report
         run: go tool cover -html=coverage-report.txt && ls -la
