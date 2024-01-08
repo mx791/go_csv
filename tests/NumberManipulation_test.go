@@ -9,9 +9,9 @@ import (
 func TestCreatingNumericSeries(t *testing.T) {
 
 	DF_SIZE := 150
-	df := dataframe.DataFrame{make(map[string]Serie)}
+	df := dataframe.DataFrame{make(map[string]dataframe.Serie)}
 	df.SetColumn("index", dataframe.MakeRangeNumberSerie(0.0, 1.0, DF_SIZE).ToSerie())
-	df.SetColumn("index_squared", df.series["index"].NumberSerie().Mul(df.series["index"].NumberSerie()).ToSerie())
+	df.SetColumn("index_squared", df.Serie("index").NumberSerie().Mul(df.Serie("index").NumberSerie()).ToSerie())
 
 	if df.Size() != DF_SIZE {
 		t.Fatalf("Size error")
@@ -35,7 +35,7 @@ func TestPriceBlackScholes(t *testing.T) {
 	jump_vol := annualized_volatility / 19.1049
 	strike := 100.0
 
-	df := dataframe.DataFrame{make(map[string]Serie)}
+	df := dataframe.DataFrame{make(map[string]dataframe.Serie)}
 	base_returns := dataframe.MakeConstantNumberSerie(100.0, DF_SIZE)
 
 	for i := 0; i < jumps; i++ {
