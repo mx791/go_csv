@@ -9,6 +9,13 @@ type Serie struct {
 	rawValues []string
 }
 
+func (s Serie) GetAt(id int) string {
+	if id < s.Size() {
+		return d.rawValues[id]
+	}
+	return ""
+}
+
 func (s Serie) BoolSerie() BoolSerie {
 	return MakeBoolSerie(s)
 }

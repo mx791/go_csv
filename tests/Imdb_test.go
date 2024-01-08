@@ -30,23 +30,23 @@ func TestLoadingDatabase(t *testing.T) {
 func TestFilteringDatabase(t *testing.T) {
 
 	database := GetDatabase()
-	database = database.Filter(database.Serie("startYear").numberSerie().equalsScalar(2021.0))
+	database = database.Filter(database.Serie("startYear").NumberSerie().EqualsScalar(2021.0))
 
 	// check if all movies are from 2021
 	non2021Movies := database.Filter(
-		database.Serie("startYear").NumberSerie().GreaterThanScalar(2021.0).or(
+		database.Serie("startYear").NumberSerie().GreaterThanScalar(2021.0).Or(
 			database.Serie("startYear").NumberSerie().LessThanScalar(2021.0)))
 
-	if non2021Movies.size() != 0 {
+	if non2021Movies.Size() != 0 {
 		t.Fatalf("Filtering error")
 	}
 
 	database = database.ILoc(database.Serie("numVotes").NumberSerie().ArgSort(false))
-	if database.Serie("originalTitle").rawValues[0] != "Spider-Man: No Way Home" {
+	if database.Serie("originalTitle").GetAt(0) != "Spider-Man: No Way Home" {
 		t.Fatalf("Spider-man should be first")
 	}
 
-	if database.Serie("originalTitle").rawValues[1] != "Dune: Part One" {
+	if database.Serie("originalTitle").GetAt(1) != "Dune: Part One" {
 		t.Fatalf("Dune comes after")
 	}
 }
@@ -55,10 +55,10 @@ func TestBestTweentiesMovies(t *testing.T) {
 
 	database := GetDatabase()
 	database = database.Filter(database.Serie("startYear").NumberSerie().BetweenScalar(1999.0, 2010.0))
-	database.SetColumn("score", database.Serie("numVotes").NumberSerie().Mul(database.Serie("averageRating").numberSerie()).toSerie())
+	database.SetColumn("score", database.Serie("numVotes").NumberSerie().Mul(database.Serie("averageRating").NumberSerie()).ToSerie())
 	database = database.ILoc(database.Serie("score").NumberSerie().ArgSort(false))
 
-	if database.Serie("originalTitle").rawValues[0] != "The Dark Knight" {
+	if database.Serie("originalTitle").GetAt(0) != "The Dark Knight" {
 		t.Fatalf("Batman should be first")
 	}
 
