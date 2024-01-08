@@ -29,7 +29,7 @@ func TestCreatingNumericSeries(t *testing.T) {
 }
 
 func TestPriceBlackScholes(t *testing.T) {
-	DF_SIZE := 15000
+	DF_SIZE := 15_000
 	jumps := 1
 	annualized_volatility := 0.25
 	jump_vol := annualized_volatility / 19.1049

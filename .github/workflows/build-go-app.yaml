@@ -14,15 +14,12 @@ jobs:
       - name: Build Go app
         run: cd dataframe && go build
 
-
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Setup Go 
         uses: actions/setup-go@v4
-      #- name: merge test and src folders
-      #  run: cp -r ./tests/* ./src
       - name: run tests
         run: cd tests && go test -coverprofile ../coverage-report.txt
       - name: HTML report
