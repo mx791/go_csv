@@ -62,5 +62,5 @@ func TestBestTweentiesMovies(t *testing.T) {
 		t.Fatalf("Batman should be first")
 	}
 
-	database.print(15)
+	database.Print(15)
 }
