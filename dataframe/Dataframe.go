@@ -200,7 +200,7 @@ func (d DataFrame) Join(d2 DataFrame, colName string) DataFrame {
 	}
 
 	rightDataframe := d2.ILoc(NumberSerie{rightIdList})
-	leftDataframe := d.iLoc(NumberSerie{leftIdList})
+	leftDataframe := d.ILoc(NumberSerie{leftIdList})
 
 	newDataframe := make(map[string]Serie, 0)
 	for col, serie := range rightDataframe.series {
