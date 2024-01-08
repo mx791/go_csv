@@ -11,6 +11,10 @@ type DataFrame struct {
 	series map[string]Serie
 }
 
+func (d DataFrame) Serie(name string) Serie {
+	return d.series[name]
+}
+
 func (d DataFrame) Size() int {
 	for _, val := range d.series {
 		return len(val.rawValues)
