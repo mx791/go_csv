@@ -11,7 +11,7 @@ type Serie struct {
 
 func (s Serie) GetAt(id int) string {
 	if id < len(s.rawValues) {
-		return ds.rawValues[id]
+		return s.rawValues[id]
 	}
 	return ""
 }
