@@ -21,6 +21,6 @@ jobs:
       - name: Setup Go 
         uses: actions/setup-go@v4
       - name: run tests
-        run: cd tests && go test -coverprofile ../coverage-report.txt
+        run: cd tests && go test -coverprofile ../coverage-report.txt && cat ../coverage-report.txt
       - name: HTML report
         run: go tool cover -html=coverage-report.txt && ls -la
