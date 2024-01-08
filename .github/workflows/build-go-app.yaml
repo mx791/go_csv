@@ -12,7 +12,7 @@ jobs:
       - name: Display Go version
         run: go version
       - name: Build Go app
-        run: cd src && go build
+        run: cd dataframe && go build
 
 
   test:

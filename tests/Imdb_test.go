@@ -2,17 +2,18 @@ package main
 
 import (
 	"testing"
+	"github.com/mx791/go_csv/dataframe"
 )
 
 func GetDatabase() DataFrame {
-	dataset := DataFrameFromCsv("./test_data/dataset.csv")
+	dataset := dataframe.DataFrameFromCsv("./test_data/dataset.csv")
 
 	dataset = dataset.withColumn([]string{"startYear", "originalTitle", "runtimeMinutes", "tconst"})
 	dataset = dataset.filter(
 		dataset.series["startYear"].numberSerie().greaterThanScalar(1980.0),
 	)
 
-	ratings := DataFrameFromCsv("./test_data/ratings.csv")
+	ratings := dataframe.DataFrameFromCsv("./test_data/ratings.csv")
 	ratings = ratings.filter(ratings.series["numVotes"].numberSerie().greaterThanScalar(100_000))
 
 	return dataset.join(ratings, "tconst")
