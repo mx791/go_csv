@@ -17,14 +17,14 @@ func (s StrSerie) Len() NumberSerie {
 }
 
 func (s StrSerie) Equals(value string) BoolSerie {
-	values := boolSerieParallelise(func(id int) bool {
+	values := BoolSerieParallelise(func(id int) bool {
 		return value == s.values[id]
 	}, len(s.values))
 	return BoolSerie{values}
 }
 
 func (s StrSerie) Contains(value string) BoolSerie {
-	values := boolSerieParallelise(func(id int) bool {
+	values := BoolSerieParallelise(func(id int) bool {
 		return strings.Contains(s.values[id], value)
 	}, len(s.values))
 	return BoolSerie{values}
