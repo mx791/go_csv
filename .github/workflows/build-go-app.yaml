@@ -23,6 +23,4 @@ jobs:
       - name: run tests
         run: cd tests && go test -coverprofile ../coverage-report.txt
       - name: HTML report
-        run: go tool cover -html=coverage-report.txt && ls -la
-      - name: show coverage
-        run: cat coverage-report.txt
+        run: go tool cover -html=coverage-report.txt
