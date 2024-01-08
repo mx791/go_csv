@@ -72,7 +72,7 @@ func (s NumberSerie) AddScalar(term float64) NumberSerie {
 }
 
 func (s NumberSerie) Mean() float64 {
-	return s.sum() / float64(len(s.values))
+	return s.Sum() / float64(len(s.values))
 }
 
 func (s NumberSerie) Max() float64 {

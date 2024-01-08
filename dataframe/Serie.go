@@ -10,11 +10,11 @@ type Serie struct {
 }
 
 func (s Serie) BoolSerie() BoolSerie {
-	return makeBoolSerie(s)
+	return MakeBoolSerie(s)
 }
 
 func (s Serie) NumberSerie() NumberSerie {
-	return makeNumberSerie(s)
+	return MakeNumberSerie(s)
 }
 
 func (s Serie) StrSerie() StrSerie {
