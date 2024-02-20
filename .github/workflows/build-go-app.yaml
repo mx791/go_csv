@@ -25,4 +25,4 @@ jobs:
       - name: HTML report
         run: go tool cover -html=coverage-report.txt
       - name: Show Report
-        run: cat coverage-report.txt
+        run: ls -la && cat coverage-report.txt
