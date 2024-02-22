@@ -46,7 +46,6 @@ func DataFrameFromSeries(series map[string]Serie) DataFrame {
 
 func DataFrameFromCsv(path string) DataFrame {
 
-	separator := '\t'
 	file, err := os.Open(path)
 	if err != nil {
 		return DataFrame{}
@@ -59,7 +58,7 @@ func DataFrameFromCsv(path string) DataFrame {
 
 	size := 0
 
-	columnsNames := strings.Split(firstLine, string(separator))
+	columnsNames := strings.Split(firstLine, string(CSV_READER_SEPARTOR))
 	series := make([][]string, len(columnsNames))
 
 	for scanner.Scan() {
