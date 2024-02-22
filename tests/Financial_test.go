@@ -6,6 +6,10 @@ import (
 )
 
 func TestSnP500(t *testing.T) {
-
-    dataset := dataframe.DataFrameFromCsv("./test_data/sp500.csv")
+	dataframe.CSV_READER_SEPARTOR = ","
+    	dataset := dataframe.DataFrameFromCsv("./test_data/sp500.csv")
+	
+	if dataset.Size() != 1769 {
+		t.Fatalf("Size error")
+	}
 }
