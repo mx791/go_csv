@@ -6,6 +6,7 @@ import (
 )
 
 func GetDatabase() dataframe.DataFrame {
+	dataframe.CSV_READER_SEPARTOR = '\t'
 	dataset := dataframe.DataFrameFromCsv("./test_data/dataset.csv")
 
 	dataset = dataset.WithColumn([]string{"startYear", "originalTitle", "runtimeMinutes", "tconst"})
