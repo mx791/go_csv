@@ -6,7 +6,7 @@ import (
 )
 
 func TestSnP500(t *testing.T) {
-	dataframe.CSV_READER_SEPARTOR = ","
+	dataframe.CSV_READER_SEPARTOR = ','
     	dataset := dataframe.DataFrameFromCsv("./test_data/sp500.csv")
 	
 	if dataset.Size() != 1769 {
