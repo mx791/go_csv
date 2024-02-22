@@ -1,4 +1,4 @@
-dataset package main
+package main
 
 import (
 	  "testing"
